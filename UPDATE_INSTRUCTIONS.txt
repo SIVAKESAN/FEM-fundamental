@@ -1,0 +1,30 @@
+FEM LEARNING LABORATORY v0.2 — LAGRANGE MULTIPLIER UPDATE
+==========================================================
+
+Your existing Windows project folder:
+D:\sem 5\str 11\New folder\FEM_Learning_Laboratory
+
+HOW TO UPDATE YOUR EXISTING WEBSITE
+1. In the CMD window running the FEM Learning Laboratory, press Ctrl+C.
+2. Back up your existing project folder if you want to keep a copy.
+3. Open the ZIP named FEM_Learning_Laboratory_Lagrange_Update.zip.
+4. Extract ALL contents directly INTO your existing FEM_Learning_Laboratory
+   folder (not its parent). Choose "Replace files in the destination".
+5. Double-click START_FEM_LAB.bat in your project folder.
+6. Open http://127.0.0.1:8010 and refresh the browser (Ctrl+F5).
+7. Click SOLVE STRUCTURE and then SHOW COMPLETE SOLUTION.
+
+If you use the FULL PROJECT ZIP instead, extract it into the parent
+"New folder" directory, replacing the FEM_Learning_Laboratory folder.
+
+Tamil / Tanglish:
+Pazhaiya CMD-la Ctrl+C press pannunga. Update ZIP-a existing
+FEM_Learning_Laboratory folder-kulla extract panni "Replace" kudunga.
+START_FEM_LAB.bat double click pannunga. Browser-la 127.0.0.1:8010
+open panni Ctrl+F5 press pannunga.
+
+New solver sequence:
+Shape functions -> Ke -> T -> KG -> H -> Lagrangian -> augmented matrix
+-> d and lambda -> reactions -> member end forces.
+
+No npm, Node.js, or separate frontend server is needed.
