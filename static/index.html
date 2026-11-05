@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FEM Learning Laboratory — Structural Solver</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <div class="eyebrow">CIVIL / STRUCTURAL ENGINEERING</div>
+      <h1>FEM LEARNING LABORATORY</h1>
+      <div class="subtitle">Model → Solve with Lagrange multipliers → View full mathematical solution</div>
+    </div>
+    <div class="edition">LINEAR STATIC FEM<br/>EDUCATIONAL EDITION · 0.2</div>
+  </header>
+  <nav class="toolbar" aria-label="Application toolbar">
+    <label>Structure type <select id="kind"></select></label>
+    <button id="example">Load example</button>
+    <button id="save">Save model (.json)</button>
+    <button id="load">Open model (.json)</button>
+    <input type="file" id="file" accept="application/json,.json" hidden />
+    <div class="grow"></div>
+    <button class="strong" id="solve">▶ SOLVE STRUCTURE</button>
+    <button id="manualButton" disabled>SHOW COMPLETE SOLUTION</button>
+  </nav>
+  <div class="instructions" id="status" role="status">Load a sample, edit the node/element values, then press SOLVE STRUCTURE.</div>
+  <main class="workspace">
+    <section class="inputs" aria-label="Model input controls">
+      <div class="section-header"><h2>1. INPUT DATA</h2><span>All editable</span></div>
+      <div class="inner">
+        <p class="units"><strong>Units:</strong> x, y, z in m; forces in N; moments in N·m; EA in N; EI, EIy, EIz and GJ in N·m²; member distributed loads in N/m.</p>
+        <div class="subsection-header"><h3>NODES AND SUPPORTS</h3><button id="addNode" class="small">+ Node</button></div>
+        <div class="table-outer"><table id="nodesTable" class="editor-table"></table></div>
+        <p class="hint">Enter restrained DOFs separated by commas, or choose a support preset. A fixed 2D frame support restrains ux, uy and rz.</p>
+        <div class="subsection-header"><h3>ELEMENTS / PROPERTIES</h3><button id="addElement" class="small">+ Element</button></div>
+        <div class="table-outer"><table id="elementsTable" class="editor-table"></table></div>
+        <p class="hint">Change <b>p</b> for polynomial-order refinement and <b>h</b> to split each element into h sub-elements. Each element can have different p and h values.</p>
+        <div class="refine-tools">
+          <button id="incH">h + 1 (all)</button>
+          <button id="decH">h − 1 (all)</button>
+          <button id="incP">p + 1 (all)</button>
+          <button id="decP">p − 1 (all)</button>
+        </div>
+      </div>
+    </section>
+    <section class="right-column">
+      <section class="drawing-panel">
+        <div class="section-header"><h2>2. STRUCTURAL MODEL</h2><div class="toggles"><label><input type="checkbox" id="showNodes" checked/> Node IDs</label><label><input type="checkbox" id="showDeformed" checked/> Deformed shape</label></div></div>
+        <div class="drawing-wrapper">
+          <svg id="drawing" viewBox="0 0 760 370" role="img" aria-label="Structural model schematic, nodal loads and boundary supports"></svg>
+        </div>
+        <div class="legend"><span><i class="legend-solid"></i> Original structure</span><span><i class="legend-dashed"></i> Deformed shape (exaggerated)</span><span>Click a member to select its derivation</span></div>
+      </section>
+      <section class="results-panel">
+        <div class="section-header"><h2>3. CALCULATED RESULTS</h2><div class="output-actions"><button id="downloadMatrices" disabled>Download Kᴳ / H (.json)</button><button id="downloadCode" disabled>Python code</button><button id="print" disabled>Print solution</button></div></div>
+        <div id="overview" class="overview empty">No solution yet. Press <strong>SOLVE STRUCTURE</strong> to calculate displacements and reactions using the Python Lagrange multiplier solver.</div>
+        <div id="tables" hidden></div>
+      </section>
+    </section>
+  </main>
+  <section id="solutionSection" class="manual-panel" hidden>
+    <div class="section-header"><h2>4. FULL MATHEMATICAL SOLUTION</h2><button id="hideManual">CLOSE SOLUTION ×</button></div>
+    <div class="manual-top">
+      <label>Inspect element <select id="selectedElement"></select></label>
+      <button id="refreshDerivation">Derive selected element</button>
+      <span>Step-by-step: shape functions → Kₑ → transformation → Kᴳ → constraint matrix H → Lagrange multipliers → displacements and reactions.</span>
+    </div>
+    <div id="derivation" class="derivation"></div>
+  </section>
+  <footer>Teaching and research only. Small-displacement, linearly elastic analysis. Validate engineering decisions independently. <span>Monochrome interface · Python + FastAPI · SymPy / NumPy / SciPy</span></footer>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
