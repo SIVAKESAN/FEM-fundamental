@@ -1,8 +1,2 @@
-fastapi>=0.110,<1
-uvicorn>=0.30,<1
-numpy>=1.26,<3
-scipy>=1.12,<2
-sympy>=1.12,<2
-pydantic>=2.5,<3
-pytest>=8,<10
-httpx>=0.27,<1
+# Compatibility for tools using requirements.txt; dependencies live in pyproject.toml.
+-e .
