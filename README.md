@@ -4,6 +4,8 @@ A simple **single-server** educational FEM application. Enter nodes, members, su
 
 **No Node.js, React, npm, or separate frontend server is required.**
 
+Use Python 3.12 or later. Dependencies are declared once in `pyproject.toml`.
+
 ## Windows: quick start
 
 **Easiest method:** Double-click `START_FEM_LAB.bat` inside the extracted project folder. The script creates a virtual environment (if necessary), installs dependencies, starts the server on **port 8010**, and opens your browser. Keep the black terminal window open. Port 8010 is separate from BeamFEM Studio’s port 8000.
@@ -12,7 +14,7 @@ A simple **single-server** educational FEM application. Enter nodes, members, su
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -e .
 .\.venv\Scripts\python.exe -m uvicorn backend.app:app --reload --port 8010
 ```
 
@@ -28,7 +30,7 @@ Linux / macOS:
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pip install -e .
 .venv/bin/python -m uvicorn backend.app:app --reload --port 8010
 ```
 
@@ -74,8 +76,29 @@ python3 -m venv .venv
 ## Run tests
 
 ```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
 .\.venv\Scripts\python.exe -m pytest -q
 ```
+
+On Linux / macOS:
+
+```bash
+.venv/bin/python -m pip install -e '.[test]'
+.venv/bin/python -m pytest -q
+```
+
+`pip install -e .` installs this project and its runtime dependencies. The `-e`
+option keeps it linked to the source folder, where the app also reads `static/`.
+`.[test]` additionally installs the optional test tools. Add runtime packages to
+`[project].dependencies`; add test tools to `[project.optional-dependencies].test`.
+`requirements.txt` is a compatibility pointer to this project, not a second list.
+
+## Deploy to Vercel
+
+Use the FastAPI framework preset with the repository root as the Root Directory.
+`[tool.vercel]` in `pyproject.toml` points to `backend.app:app`, while `[project]`
+declares the runtime dependencies. No custom build command is needed.
+After deployment, check `/api/health`, the homepage, and solving a built-in example.
 
 ## Main files
 
